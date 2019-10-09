@@ -16,6 +16,19 @@ For example: ``levenshtein_distance('berne', 'born') == 2`` representing the tra
 
 See the `Levenshtein distance article at Wikipedia <http://en.wikipedia.org/wiki/Levenshtein_distance>`_ for more details.
 
+Weighted Levenshtein Distance
+--------------------
+
+.. py:function:: weighted_levenshtein_distance(s1, s2, {}, {}, {})
+
+    Compute the Weighted Levenshtein distance between s1 and s2.
+
+Levenshtein distance represents the number of insertions, deletions, and substitutions required to change one word to another.
+
+For example: ``weighted_levenshtein_distance('berne', 'born', {}, {}, {}) == 2`` representing the transformation of the first e to o and the deletion of the second e.
+
+See the `Levenshtein distance article at Wikipedia <http://en.wikipedia.org/wiki/Levenshtein_distance>`_ for more details.
+
 Damerau-Levenshtein Distance
 ----------------------------
 

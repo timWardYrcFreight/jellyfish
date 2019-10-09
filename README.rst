@@ -36,6 +36,7 @@ Included Algorithms
 String comparison:
 
 * Levenshtein Distance
+* Weighted Levenshtein Distance
 * Damerau-Levenshtein Distance
 * Jaro Distance
 * Jaro-Winkler Distance
@@ -54,6 +55,8 @@ Example Usage
 
 >>> import jellyfish
 >>> jellyfish.levenshtein_distance(u'jellyfish', u'smellyfish')
+2
+>>> jellyfish.weighted_levenshtein_distance(u'jellyfish', u'smellyfish', {}, {}, {})
 2
 >>> jellyfish.jaro_distance(u'jellyfish', u'smellyfish')
 0.89629629629629637

@@ -40,6 +40,37 @@ def levenshtein_distance(s1, s2):
     return cur[-1]
 
 
+def weighted_levenshtein_distance(s1, s2, insert_weights, delete_weights, substitute_weights):
+    _check_type(s1)
+    _check_type(s2)
+
+    if s1 == s2:
+        return 0
+    rows = len(s1)+1
+    cols = len(s2)+1
+
+    if not s1:
+        return cols-1
+    if not s2:
+        return rows-1
+
+    prev = None
+    cur = range(cols)
+    for r in range(1, rows):
+        prev, cur = cur, [r] + [0]*(cols-1)
+        for c in range(1, cols):
+            delete_weight = (1.0 if s1[r-1] not in delete_weights else delete_weights[s1[r-1]])
+            insert_weight = (1.0 if s2[c-1] not in insert_weights else insert_weights[s2[c-1]])
+            substitute_weight = (1.0 if (s1[r-1],s2[c-1]) not in substitute_weights else substitute_weights[(s1[r-1],s2[c-1])])
+
+            deletion = prev[c] + delete_weight
+            insertion = cur[c-1] + insert_weight
+            edit = prev[c-1] + (0 if s1[r-1] == s2[c-1] else substitute_weight)
+            cur[c] = min(edit, deletion, insertion)
+
+    return cur[-1]
+
+
 def _jaro_winkler(ying, yang, long_tolerance, winklerize):
     _check_type(ying)
     _check_type(yang)

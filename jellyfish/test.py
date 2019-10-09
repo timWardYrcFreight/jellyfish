@@ -55,6 +55,15 @@ def test_levenshtein_distance(jf, s1, s2, value):
     assert jf.levenshtein_distance(s1, s2) == value
 
 
+@pytest.mark.parametrize("s1,s2,value", _load_data('levenshtein'), ids=str)
+def test_weighted_levenshtein_distance(jf, s1, s2, value):
+    value = float(value)
+    delete_weights = {}
+    insert_weights = {}
+    substitute_weights = {}
+    assert jf.weighted_levenshtein_distance(s1, s2, delete_weights, insert_weights, substitute_weights) == value
+
+
 @pytest.mark.parametrize("s1,s2,value", _load_data('damerau_levenshtein'), ids=str)
 def test_damerau_levenshtein_distance(jf, s1, s2, value):
     value = int(value)
@@ -140,6 +149,13 @@ def test_levenshtein_distance_type(jf):
     assert jf.levenshtein_distance(u'abc', u'abc') == 0
     with pytest.raises(TypeError) as exc:
         jf.levenshtein_distance(b'abc', b'abc')
+    assert 'expected' in str(exc.value)
+
+
+def test_weighted_levenshtein_distance_type(jf):
+    assert jf.weighted_levenshtein_distance(u'abc', u'abc', {}, {}, {}) == 0.0
+    with pytest.raises(TypeError) as exc:
+        jf.weighted_levenshtein_distance(b'abc', b'abc', {}, {}, {})
     assert 'expected' in str(exc.value)
 
 
