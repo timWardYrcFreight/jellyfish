@@ -57,11 +57,19 @@ def test_levenshtein_distance(jf, s1, s2, value):
 
 @pytest.mark.parametrize("s1,s2,value", _load_data('levenshtein'), ids=str)
 def test_weighted_levenshtein_distance(jf, s1, s2, value):
+    # TODO : Implement valid test data
     value = float(value)
     delete_weights = {}
     insert_weights = {}
     substitute_weights = {}
     assert jf.weighted_levenshtein_distance(s1, s2, delete_weights, insert_weights, substitute_weights) == value
+
+
+@pytest.mark.parametrize("s1,s2,value", _load_data('levenshtein'), ids=str)
+def test_custom_weighted_levenshtein_distance(jf, s1, s2, value):
+    # TODO : Implement valid test data
+    value = float(value)
+    assert jf.custom_weighted_levenshtein_distance(s1, s2, 1.0, 0.25, 1.0, 0.25, 1.0, 0.25) == value
 
 
 @pytest.mark.parametrize("s1,s2,value", _load_data('damerau_levenshtein'), ids=str)

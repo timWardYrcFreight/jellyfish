@@ -70,6 +70,60 @@ def weighted_levenshtein_distance(s1, s2, insert_weights, delete_weights, substi
 
     return cur[-1]
 
+def custom_weighted_levenshtein_distance(s1, s2, insert_numeric_weight, insert_alpha_weight, delete_numeric_weight, delete_alpha_weight, substitute_numeric_weight, substitute_alpha_weight):
+    _check_type(s1)
+    _check_type(s2)
+
+    if s1 == s2:
+        return 0
+    rows = len(s1)+1
+    cols = len(s2)+1
+
+    if not s1:
+        return cols-1
+    if not s2:
+        return rows-1
+
+    prev = None
+    cur = range(cols)
+    for r in range(1, rows):
+        is_valid1 = True if s1[r-1] == " " or s1[r-1].isalnum() else False
+        is_digit1 = s1[r-1].isdigit()
+        prev, cur = cur, [r] + [0]*(cols-1)
+        for c in range(1, cols):
+            is_valid2 = True if s2[c-1] == " " or s2[c-1].isalnum() else False
+            is_digit2 = s2[c-1].isdigit()
+
+            if is_valid2 :
+                if is_digit2 :
+                    insert_weight = insert_numeric_weight
+                else :
+                    insert_weight = insert_alpha_weight
+            else :
+                insert_weight = 0.0
+
+            if is_valid1 :
+                if is_digit1 :
+                    delete_weight = delete_numeric_weight
+                else :
+                    delete_weight = delete_alpha_weight
+            else :
+                delete_weight = 0.0
+
+            if is_valid1 and is_valid2 :
+                if is_digit1 or is_digit2 :
+                    substitute_weight = substitute_numeric_weight
+                else :
+                    substitute_weight = substitute_alpha_weight
+            else :
+                substitute_weight = 0.0
+
+            deletion = prev[c] + delete_weight
+            insertion = cur[c-1] + insert_weight
+            edit = prev[c-1] + (0 if s1[r-1] == s2[c-1] else substitute_weight)
+            cur[c] = min(edit, deletion, insertion)
+
+    return cur[-1]
 
 def _jaro_winkler(ying, yang, long_tolerance, winklerize):
     _check_type(ying)

@@ -78,6 +78,7 @@ def run_setup(build_c):
                                     'cjellyfish/hamming.c',
                                     'cjellyfish/levenshtein.c',
                                     'cjellyfish/weighted_levenshtein.c',
+                                    'cjellyfish/custom_weighted_levenshtein.c',
                                     'cjellyfish/damerau_levenshtein.c',
                                     'cjellyfish/mra.c',
                                     'cjellyfish/soundex.c',
